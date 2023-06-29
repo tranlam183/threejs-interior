@@ -45,9 +45,9 @@ const Mesh3D = (props: Mesh3DProps) => {
   // });
 
 
-  let planeIntersectPoint = new THREE.Vector3();
+  const planeIntersectPoint = new THREE.Vector3();
 
-  const [ api] = useSpring(() => ({
+  const [spring, api] = useSpring(() => ({
     // position: [0, 0, 0],
     position: position,
     scale: 1,
