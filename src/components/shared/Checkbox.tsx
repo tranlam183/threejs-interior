@@ -1,8 +1,8 @@
-import React,{ memo, useEffect } from "react";
-import { Box, Stack, Button, ButtonProps } from "@mui/material";
-import { useToggle } from "hooks";
-import { Text, TextProps } from "components/shared";
+import { Button, ButtonProps, Stack } from "@mui/material";
 import { CheckedIcon } from "assets/icons";
+import { Text, TextProps } from "components/shared";
+import { useToggle } from "hooks";
+import { memo, useEffect } from "react";
 
 export enum OptionType {
   CHECKBOX = 1,
