@@ -1,26 +1,39 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "target": "es6",    /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "lib": ["dom", "dom.iterable", "esnext"],   /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "allowJs": true,     /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
+    "skipLibCheck": true,    /* Skip type checking all .d.ts files. */
+    "strict": true,    /* Enable all strict type-checking options. */
+    "forceConsistentCasingInFileNames": false,     /* Ensure that casing is correct in imports. */
+    "noEmit": true,    /* Disable emitting files from a compilation. */
+    "esModuleInterop": true,     /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+    "module": "esnext",    /* Specify what module code is generated. */
+    "noImplicitAny": false,    /* Enable error reporting for expressions and declarations with an implied 'any' type. */
+    "moduleResolution": "node",    /* Specify how TypeScript looks up a file from a given module specifier. */
+    "resolveJsonModule": true,     /* Enable importing .json files. */
+    "isolatedModules": true,     /* Ensure that each file can be safely transpiled without relying on other imports. */
+    "jsx": "preserve",     /* Specify what JSX code is generated. */
+    "incremental": true,
+    "baseUrl": "src",    /* Specify the base directory to resolve non-relative module names. */
+    "paths": {
+      "public/*": ["../public/*"],
+      "api/*": ["api/*"],
+      "assets/*": ["assets/*"],
+      "components/*": ["components/*"],
+      "constant/*": ["constant/*"],
+      "contexts/*": ["contexts/*"],
+      "hooks/*": ["hooks/*"],
+      "layouts/*": ["layouts/*"],
+      "store/*": ["store/*"],
+      "utils/*": ["utils/*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "src"],
+  "exclude": ["node_modules"]
 }
