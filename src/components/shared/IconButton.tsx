@@ -29,7 +29,7 @@ const IconButton = (props: IconButtonProps) => {
     );
   };
 
-  if (Boolean(textTooltip)) {
+  if (textTooltip !== undefined) {
     return (
       <Tooltip
         title={textTooltip as string}
