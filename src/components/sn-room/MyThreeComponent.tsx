@@ -145,7 +145,26 @@ const MyThreeComponent: React.FC = () => {
           {MENUS.map((menu, index) => {
             const isActive = formats.find((e) => e == menu.value);
             return (
-              <ToggleBtn
+              <ToggleButton
+                value={menu.value}
+                aria-label={menu.label}
+                sx={{
+                  my: menu.marginVertical,
+                  color: isActive ? "white" : "rgba(255,255,255,.6)",
+                  "&.Mui-selected": {
+                    color: "white",
+                  },
+                }}
+              >
+                <Tooltip
+                  title={isActive ? menu.labelActive : menu.label}
+                  arrow
+                  placement="right-start"
+                  sx={{}}
+                >
+                  {isActive ? menu.activeIcon : menu.icon}
+                </Tooltip>
+                {/* <ToggleBtn
                 value={menu.value}
                 label={menu.label}
                 labelActive={menu.labelActive}
@@ -153,7 +172,8 @@ const MyThreeComponent: React.FC = () => {
                 marginVertical={menu.marginVertical}
                 activeIcon={menu.activeIcon}
                 icon={menu.icon}
-              />
+              /> */}
+              </ToggleButton>
             );
           })}
         </ToggleButtonGroup>
