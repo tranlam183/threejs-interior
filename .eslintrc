@@ -9,9 +9,9 @@
       "@typescript-eslint/no-extra-boolean-cast": "off",
       // "@typescript-eslint/prefer-const": "warn",
       "no-console": [
-        "warn",
+        "off",
         {
-          "allow": ["warn"]
+          "allow": ["off"]
         }
       ],
       "@typescript-eslint/ban-ts-comment": [
