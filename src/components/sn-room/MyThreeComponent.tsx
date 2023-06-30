@@ -36,9 +36,9 @@ const MyThreeComponent: React.FC = () => {
 
   const [formats, setFormats] = useState<Array<String>>([]);
 
-  const [models, setModels] = useState(listModels);
+  const [models, setModels] = useState(LISTMODELS);
   const [modelSelected, setModelSelected] = useState({
-    selected: listModels[0],
+    selected: LISTMODELS[0],
     index: 0,
   });
 
@@ -78,27 +78,38 @@ const MyThreeComponent: React.FC = () => {
 
   //Slider input
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+  const handleSliderChange = (
+    event: Event,
+    newValue: number | number[],
+    id
+  ) => {
+    const updatedVal = (value as Array<number>).map((e, i) =>
+      i === id ? newValue : e
+    );
+
     const newValueModelSelected = {
       ...modelSelected.selected,
-      reSize: newValue,
+      reSize: updatedVal,
     };
-    const newListModels = models.map((item, index) =>
+    const newLISTMODELS = models.map((item, index) =>
       index === modelSelected.index ? newValueModelSelected : item
     );
-    setModels(newListModels as any);
-    setValue(newValue);
+    setModels(newLISTMODELS as any);
+    setValue(updatedVal as Array<number>);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id
+  ) => {
     const newValueModelSelected = {
       ...modelSelected.selected,
       reSize: Number(event.target.value),
     };
-    const newListModels = models.map((item, index) =>
+    const newLISTMODELS = models.map((item, index) =>
       index === modelSelected.index ? newValueModelSelected : item
     );
-    setModels(newListModels as any);
+    setModels(newLISTMODELS as any);
 
     setValue(event.target.value === "" ? "" : Number(event.target.value));
   };
@@ -131,29 +142,18 @@ const MyThreeComponent: React.FC = () => {
           onChange={handleFormat}
           sx={{ width: 60 }}
         >
-          {Menus.map((menu, index) => {
+          {MENUS.map((menu, index) => {
             const isActive = formats.find((e) => e == menu.value);
             return (
-              <ToggleButton
+              <ToggleBtn
                 value={menu.value}
-                aria-label={menu.label}
-                sx={{
-                  my: menu.marginVertical,
-                  color: isActive ? "white" : "rgba(255,255,255,.6)",
-                  "&.Mui-selected": {
-                    color: "white",
-                  },
-                }}
-              >
-                <Tooltip
-                  title={isActive ? menu.labelActive : menu.label}
-                  arrow
-                  placement="right-start"
-                  sx={{}}
-                >
-                  {isActive ? menu.activeIcon : menu.icon}
-                </Tooltip>
-              </ToggleButton>
+                label={menu.label}
+                labelActive={menu.labelActive}
+                isActive={isActive}
+                marginVertical={menu.marginVertical}
+                activeIcon={menu.activeIcon}
+                icon={menu.icon}
+              />
             );
           })}
         </ToggleButtonGroup>
@@ -200,7 +200,7 @@ const MyThreeComponent: React.FC = () => {
             </Search>
             <Stack>
               <ImageList sx={{ width: 300, height: "auto" }} cols={2}>
-                {listModels.map((item) => {
+                {LISTMODELS.map((item) => {
                   return (
                     <ImageListItem
                       key={item.preImage}
@@ -261,47 +261,19 @@ const MyThreeComponent: React.FC = () => {
               <CloseOutlinedIcon />
             </IconButton>
           </Stack>
-          <Grid container spacing={2} alignItems="center" sx={{ px: 2, mt: 5 }}>
-            <Grid item>
-              <Typography
-                id="input-slider"
-                gutterBottom
-                color="black"
-                fontWeight="bold"
-                fontSize="17px"
-                mr={1}
-              >
-                Scale
-              </Typography>
-            </Grid>
-            <Grid item xs width="80%">
-              <Slider
-                min={0.1}
-                step={0.1}
-                max={10}
-                value={typeof value === "number" ? value : 0}
-                onChange={handleSliderChange}
-                aria-labelledby="input-slider"
-                sx={{ color: "#5396ee" }}
+          {CONFIGMENUS.map((item, index) => {
+            return (
+              <SpliderCpt
+                label={item}
+                value={value[index]}
+                handleSliderChange={(e, val) =>
+                  handleSliderChange(e, val, index)
+                }
+                handleInputChange={(e) => handleInputChange(e, index)}
+                handleBlur={handleBlur}
               />
-            </Grid>
-            <Grid item width="50px" color="black">
-              <Input
-                value={value}
-                size="small"
-                sx={{ color: "black" }}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                inputProps={{
-                  step: 0.1,
-                  min: 0,
-                  max: 10,
-                  type: "number",
-                  "aria-labelledby": "input-slider",
-                }}
-              />
-            </Grid>
-          </Grid>
+            );
+          })}
         </Stack>
       )}
       <Canvas shadows style={{ width: "100%", height: "100vh" }} dpr={[1, 2]}>
@@ -392,81 +364,8 @@ function Sphere({
   scale = 1,
 }) {
   return (
-    <Float
-      floatIntensity={floatIntensity}
-      key={undefined}
-      attach={undefined}
-      args={undefined}
-      onUpdate={undefined}
-      visible={undefined}
-      type={undefined}
-      isGroup={undefined}
-      id={undefined}
-      uuid={undefined}
-      name={undefined}
-      parent={undefined}
-      modelViewMatrix={undefined}
-      normalMatrix={undefined}
-      matrixWorld={undefined}
-      matrixAutoUpdate={undefined}
-      matrixWorldAutoUpdate={undefined}
-      matrixWorldNeedsUpdate={undefined}
-      castShadow={undefined}
-      receiveShadow={undefined}
-      frustumCulled={undefined}
-      renderOrder={undefined}
-      animations={undefined}
-      userData={undefined}
-      customDepthMaterial={undefined}
-      customDistanceMaterial={undefined}
-      isObject3D={undefined}
-      onBeforeRender={undefined}
-      onAfterRender={undefined}
-      applyMatrix4={undefined}
-      applyQuaternion={undefined}
-      setRotationFromAxisAngle={undefined}
-      setRotationFromEuler={undefined}
-      setRotationFromMatrix={undefined}
-      setRotationFromQuaternion={undefined}
-      rotateOnAxis={undefined}
-      rotateOnWorldAxis={undefined}
-      rotateX={undefined}
-      rotateY={undefined}
-      rotateZ={undefined}
-      translateOnAxis={undefined}
-      translateX={undefined}
-      translateY={undefined}
-      translateZ={undefined}
-      localToWorld={undefined}
-      worldToLocal={undefined}
-      lookAt={undefined}
-      add={undefined}
-      remove={undefined}
-      removeFromParent={undefined}
-      clear={undefined}
-      getObjectById={undefined}
-      getObjectByName={undefined}
-      getObjectByProperty={undefined}
-      getObjectsByProperty={undefined}
-      getWorldPosition={undefined}
-      getWorldQuaternion={undefined}
-      getWorldScale={undefined}
-      getWorldDirection={undefined}
-      raycast={undefined}
-      traverse={undefined}
-      traverseVisible={undefined}
-      traverseAncestors={undefined}
-      updateMatrix={undefined}
-      updateMatrixWorld={undefined}
-      updateWorldMatrix={undefined}
-      toJSON={undefined}
-      clone={undefined}
-      copy={undefined}
-      addEventListener={undefined}
-      hasEventListener={undefined}
-      removeEventListener={undefined}
-      dispatchEvent={undefined}
-    >
+    // @ts-expect-error This line is intentionally causing a type error
+    <Float floatIntensity={floatIntensity}>
       <mesh castShadow position={position} scale={scale}>
         <sphereGeometry />
         <meshBasicMaterial color={color} roughness={1} />
@@ -475,11 +374,11 @@ function Sphere({
   );
 }
 
-export const listModels = [
+export const LISTMODELS = [
   {
     name: "Bitcoin",
     urlModel: "/bitcoin.glb",
-    reSize: 0.01,
+    reSize: [0.01, 0.01, 0.01],
     rePosition: [0, 0, 0],
     preImage:
       "https://th.bing.com/th/id/R.9a3c543fafe8f20af40857e36273e97e?rik=cR1E1zhpgA8R4Q&pid=ImgRaw&r=0",
@@ -487,7 +386,7 @@ export const listModels = [
   {
     name: "Table",
     urlModel: "/table.glb",
-    reSize: 0.3,
+    reSize: [0.3, 0.3, 0.3],
     rePosition: [0, 0, 0],
     preImage:
       "https://a.1stdibscdn.com/archivesE/upload/9304/02_13/Chapo_tafel_130_diameter_foto10/XXX_Chapo_tafel_130_diameter_foto1.jpg",
@@ -495,7 +394,7 @@ export const listModels = [
   {
     name: "Chair",
     urlModel: "/chair2.glb",
-    reSize: 1,
+    reSize: [1, 1, 1],
     rePosition: [0, 0, 0],
     preImage:
       "https://i.pinimg.com/originals/29/c5/ca/29c5ca5cbb072d9916b3272fb6019b6f.jpg",
@@ -503,13 +402,13 @@ export const listModels = [
   {
     name: "Table 2",
     urlModel: "/table1.glb",
-    reSize: 5,
+    reSize: [5, 5, 5],
     rePosition: [0, 0, 0],
     preImage:
       "https://w7.pngwing.com/pngs/174/738/png-transparent-table-desk-office-ikea-glass-table-glass-angle-kitchen-thumbnail.png",
   },
 ];
-const Menus = [
+const MENUS = [
   {
     value: "View",
     label: "Show 2D Floor Planner",
@@ -551,6 +450,8 @@ const Menus = [
     activeIcon: <SaveIcon />,
   },
 ];
+
+const CONFIGMENUS = ["Width", "Height", "Depth"];
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -599,3 +500,88 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+const SpliderCpt = ({
+  label,
+  value,
+  handleSliderChange,
+  handleInputChange,
+  handleBlur,
+}) => {
+  return (
+    <Grid container spacing={2} alignItems="center" sx={{ px: 2, mt: 1 }}>
+      <Grid item>
+        <Typography
+          id="input-slider"
+          gutterBottom
+          color="black"
+          fontWeight="bold"
+          fontSize="17px"
+          mr={1}
+        >
+          {label}
+        </Typography>
+      </Grid>
+      <Grid item xs width="80%">
+        <Slider
+          min={0.1}
+          step={0.1}
+          max={10}
+          value={typeof value === "number" ? value : 0}
+          onChange={handleSliderChange}
+          aria-labelledby="input-slider"
+          sx={{ color: "#5396ee" }}
+        />
+      </Grid>
+      <Grid item width="50px" color="black">
+        <Input
+          value={value}
+          size="small"
+          sx={{ color: "black" }}
+          onChange={handleInputChange}
+          onBlur={handleBlur}
+          inputProps={{
+            step: 0.1,
+            min: 0,
+            max: 10,
+            type: "number",
+            "aria-labelledby": "input-slider",
+          }}
+        />
+      </Grid>
+    </Grid>
+  );
+};
+
+const ToggleBtn = ({
+  value,
+  label,
+  labelActive,
+  isActive,
+  marginVertical,
+  activeIcon,
+  icon,
+}) => {
+  return (
+    <ToggleButton
+      value={value}
+      aria-label={label}
+      sx={{
+        my: marginVertical,
+        color: isActive ? "white" : "rgba(255,255,255,.6)",
+        "&.Mui-selected": {
+          color: "white",
+        },
+      }}
+    >
+      <Tooltip
+        title={isActive ? labelActive : label}
+        arrow
+        placement="right-start"
+        sx={{}}
+      >
+        {isActive ? activeIcon : icon}
+      </Tooltip>
+    </ToggleButton>
+  );
+};

@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 type Mesh3DProps = {
   urlModel: string;
-  scaleSize: number;
+  scaleSize: Array<number>;
   rePosition: Array<number>;
   reRotation?: Array<number>;
   onHandleClick?: () => void;
@@ -97,9 +97,9 @@ const Mesh3D = (props: Mesh3DProps) => {
       onClick={(event) => onHandleClick && onHandleClick()}
       onPointerOver={(event) => handlePoiterOver(event)}
       onPointerOut={(event) => handlePoiterOut(event)}
-      scale={scaleSize ?? 1}
+      scale={scaleSize ?? [1,1,1]}
       position={position}
-      args={[1, 1, 1]}
+      // args={[1, 30, 50]}
       // rotation={reRotation ?? [0, 0, 0]}
     >
       {/* Hiển thị model */}
